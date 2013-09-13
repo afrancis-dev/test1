@@ -2,7 +2,7 @@ Name: weblogic
 Cartridge-Short-Name: WEBL
 Cartridge-Version: '0.0.1'
 Compatible-Versions: ['0.0.1']
-Cartridge-Vendor: Paychex
+Cartridge-Vendor: paychex
 Source-Url: git://github.com/afrancis-dev/test1.git
 Display-Name: weblogic-template
 Description: 'Something about what weblogic does'
