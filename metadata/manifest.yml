@@ -1,0 +1,36 @@
+Name: weblogic
+Cartridge-Short-Name: WEBL
+Cartridge-Version: '0.0.1'
+Compatible-Versions: ['0.0.1']
+Cartridge-Vendor: Paychex
+Source-Url: git://github.com/afrancis-dev/test1.git
+Display-Name: weblogic-template
+Description: 'Something about what weblogic does'
+Version: '0.0.1'
+Versions: ['0.0.1']
+License: 'Some license thing here'
+License-Url: 'http://filler.com'
+Vendor: 'That guy who made weblogic'
+Categories:
+	- asdf
+	- qwerty
+	- zxcv
+Website: http://vendor.com
+Endpoints:
+	- Private-IP-Name:		IP_1
+	  Private-Port-Name:	PORT_1
+	  Private-Port:			8080
+	  Public-Port-Name:		PROXY_PORT_1
+#	  Mappings:
+#		- Frontend:		"/pubpath1"
+#		  Backend:		"/intpath1"
+#		- Frontend:		"/pubsocket1"
+#		  Backend:		"/intsocket1"
+#		  Options:		{ "websocket": true }
+	- Private-IP-Name:		IP_2
+	  Private-Port-Name:	PORT_2
+	  Private-Port:			9000
+	  Public-Port-Name:		PROXY_PORT_2
+#	  Mappings:
+#	  - Frontend:		"/pubpath2"
+#	  - Backend:		"/intpath2"
