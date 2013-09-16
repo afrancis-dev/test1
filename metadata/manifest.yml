@@ -20,7 +20,7 @@ Provides:
   - "lighttpd"
 Scaling:
   - Min: 1
-#  - Max: -1
+  - Max: -1
   
 Cart-Data:
   - Key: OPENSHIFT_LIGHTTPD_LOG_DIR
