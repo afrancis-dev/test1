@@ -14,7 +14,7 @@ set -u
 echo "$version" > $OPENSHIFT_LIGHTTPD_DIR/env/LIGHTTPD_VERSION
 
 pushd $OPENSHIFT_LIGHTTPD_DIR > /dev/null
-for dir in logs tmp pid; do
+for dir in logs tmp pid conf; do
 	mkdir -p $dir
 done
 popd > /dev/null
