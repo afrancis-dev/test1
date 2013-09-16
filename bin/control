@@ -1,2 +1,124 @@
 #!/bin/bash
-exit 0;
+
+STOPTIMEOUT=10
+FMT="%a %b %d %Y %H:%M:%S GMT%z (%Z)"
+
+function is_lighttpd_service_running() {
+    if [ -f $OPENSHIFT_LIGHTTPD_DIR/pid/lighttpd.pid ]; then
+        lighttpd_pid=$( cat $OPENSHIFT_LIGHTTPD_DIR/pid/lighttpd.pid 2> /dev/null )
+        if `ps --pid $lighttpd_pid 2>&1`; then
+            return 0
+        fi
+    fi
+
+    return 1
+}
+
+function status() {
+    if is_lighttpd_service_running; then
+        client_result "Application is running"
+    else
+        client_result "Application is not running"
+    fi
+}
+
+
+function start() {
+    logf="$OPENSHIFT_LIGHTTPD_LOG_DIR/lighttpd.log"
+    pushd "$OPENSHIFT_LIGHTTPD_DIR" > /dev/null
+    {
+        if [ -f "versions/$LIGHTTPD_VERSION/bin/lighttpd" ]; then
+            echo "`date +"$FMT"`: Starting application '$OPENSHIFT_APP_NAME' from versions/$LIGHTTPD_VERSION/bin/lighttpd..."
+
+            nohup "versions/$LIGHTTPD_VERSION/bin/lighttpd" -D -f "$OPENSHIFT_LIGHTTPD_DIR/conf/lighttpd.conf" >> $logf 2>&1 &
+
+            ret=$?
+            npid=$!
+            if [ $ret -eq 0 ]; then
+                echo "$npid" > "$OPENSHIFT_LIGHTTPD_DIR/pid/lighttpd.pid"
+            else
+                echo "Application '$OPENSHIFT_APP_NAME' failed to start - $ret" 1>&2
+                exit $ret
+            fi
+        else
+            echo "WARN: Could not find the compiled application versions/$LIGHTTPD_VERSION/bin/lighttpd, will not start"
+        fi
+    } >> $logf
+}
+
+function stop() {
+    if [ -f $OPENSHIFT_LIGHTTPD_DIR/pid/lighttpd.pid ]; then
+        lighttpd_pid=$( cat $OPENSHIFT_LIGHTTPD_DIR/pid/lighttpd.pid 2> /dev/null )
+    fi
+
+    if [ -n "$lighttpd_pid" ]; then
+        logf="$OPENSHIFT_LIGHTTPD_LOG_DIR/lighttpd.log"
+        echo "`date +"$FMT"`: Stopping application '$OPENSHIFT_APP_NAME' ..." >> $logf
+        /bin/kill $lighttpd_pid
+        ret=$?
+        if [ $ret -eq 0 ]; then
+            TIMEOUT="$STOPTIMEOUT"
+            while [ $TIMEOUT -gt 0 ] && is_lighttpd_service_running ; do
+                /bin/kill -0 "$lighttpd_pid" >/dev/null 2>&1 || break
+                sleep 1
+                let TIMEOUT=${TIMEOUT}-1
+            done
+        fi
+
+        echo "`date +"$FMT"`: Stopped Lighttpd application '$OPENSHIFT_APP_NAME'" >> $logf
+        rm -f $OPENSHIFT_LIGHTTPD_DIR/pid/lighttpd.pid
+    else
+        echo "Warning: Application '$OPENSHIFT_APP_NAME' server exists without a pid file.  Use force-stop to kill." 1>&2
+    fi
+}
+
+function restart() {
+    stop
+    start
+}
+
+function build() {
+    echo
+}
+
+function post-deploy() {
+    echo
+}
+
+function pre-build() {
+    echo
+}
+
+function tidy() {
+  client_message "Emptying log dir: $OPENSHIFT_LIGHTTPD_LOG_DIR"
+  shopt -s dotglob
+  rm -rf $OPENSHIFT_LIGHTTPD_DIR/logs/*
+  rm -rf $OPENSHIFT_LIGHTTPD_DIR/tmp/*
+}
+
+#
+#  main():
+#
+
+# Ensure arguments.
+if ! [ $# -eq 1 ]; then
+    echo "Usage: $0 [start|restart|graceful|graceful-stop|stop|status]"
+    exit 1
+fi
+
+# Source utility functions.
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+# Handle commands.
+case "$1" in
+    start)               start       ;;
+    restart|graceful)    restart     ;;
+    graceful-stop|stop)  stop        ;;
+    status)              status      ;;
+    build)               build       ;;
+    pre-build)           pre-build   ;;
+    post-deploy)         post-deploy ;;
+    tidy)                tidy        ;;
+    *) exit 0;
+esac
+
