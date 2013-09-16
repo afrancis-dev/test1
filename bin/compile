@@ -27,7 +27,7 @@ else
     echo    "       First download, may take several minutes"
     echo -n "-----> Installing PCRE $pcre_ver..."
     curl -sOL $pcre_url
-    tar zxf $pcre_file
+    tar -zxf $pcre_file
     rm -f $pcre_file
     echo " done"
 fi
@@ -41,14 +41,15 @@ else
     echo    "       First download, may take several minutes"
     echo -n "-----> Installing Lighttpd $lighttpd_ver..."
     curl -sO $lighttpd_url
-    tar zxf $lighttpd_file
+    tar -zxf $lighttpd_file
     rm -f $lighttpd_file
     echo " done"
 fi
 
 
 cd $src_dir/lighttpd-$lighttpd_ver/
-./configure --with-pcre=$src_dir/pcre-$pcre_ver/
+#./configure --with-pcre=$src_dir/pcre-$pcre_ver/
+./configure --without-pcre
 make
 cp -f src/lighttpd $bin_dir
 make clean
