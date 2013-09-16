@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# usage: bin/compile <build-dir>
+
+set -eo pipefail
+
+mkdir -p "$1/build" "$1/src"
+bin_dir=$(cd "$1/build" && pwd)
+src_dir=$(cd "$1/src" && pwd)
+buildpack=$(dirname $(dirname $0))
+
+pcre_ver=${PCRE_VERSION:-8.33}
+pcre_file=${PCRE_FILE:-pcre-$pcre_ver.tar.gz}
+pcre_url=${PCRE_URL:-http://sourceforge.net/projects/pcre/files/pcre/$pcre_ver/$pcre_file}
+
+lighttpd_ver=${LIGHTTPD_VERSION:-1.4.32}
+lighttpd_file=${LIGHTTPD_FILE:-lighttpd-$lighttpd_ver.tar.gz}
+lighttpd_url=${LIGHTTPD_URL:-http://download.lighttpd.net/lighttpd/releases-1.4.x/$lighttpd_file}
+
+
+if test -d $src_dir/pcre-$pcre_ver
+then
+    echo "-----> Using PCRE $pcre_ver"
+else
+    mkdir -p $src_dir/pcre-$pcre_ver
+    cd $src_dir
+    echo    "       First download, may take several minutes"
+    echo -n "-----> Installing PCRE $pcre_ver..."
+    curl -sOL $pcre_url
+    tar zxf $pcre_file
+    rm -f $pcre_file
+    echo " done"
+fi
+
+if test -d $src_dir/lighttpd-$lighttpd_ver
+then
+    echo "-----> Using Lighttpd $lighttpd_ver"
+else
+    mkdir -p $src_dir/lighttpd-$lighttpd_ver
+    cd $src_dir
+    echo    "       First download, may take several minutes"
+    echo -n "-----> Installing Lighttpd $lighttpd_ver..."
+    curl -sO $lighttpd_url
+    tar zxf $lighttpd_file
+    rm -f $lighttpd_file
+    echo " done"
+fi
+
+
+cd $src_dir/lighttpd-$lighttpd_ver/
+./configure --with-pcre=$src_dir/pcre-$pcre_ver/
+make
+cp -f src/lighttpd $bin_dir
+make clean
