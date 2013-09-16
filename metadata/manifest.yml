@@ -1,36 +1,75 @@
-Name: weblogic
-Cartridge-Short-Name: WEBL
+Name: lighttpd
+Cartridge-Short-Name: LIGHTTPD
 Cartridge-Version: '0.0.1'
 Compatible-Versions: ['0.0.1']
-Cartridge-Vendor: paychex
+Cartridge-Vendor: afrancis
 Source-Url: git://github.com/afrancis-dev/test1.git
-Display-Name: weblogic-template
+Display-Name: lighttpd-template
 Description: 'Something about what weblogic does'
-Version: '0.0.1'
-Versions: ['0.0.1']
-License: 'Some license thing here'
-License-Url: 'http://filler.com'
-Vendor: 'That guy who made weblogic'
+Version: '1.4.32'
+Versions: ['1.4.32']
+License: 'BSD'
+License-Url: 'http://tba.com'
+Vendor: 'lighttpd'
 Categories:
-  - asdf
-  - qwerty
-  - zxcv
-Website: http://vendor.com
+  - service
+  - lighttpd
+  - web_framework
+Provides:
+  - lighttpd-1.4
+  - "lighttpd"
+Scaling:
+  - Min: 1
+  - Max: -1
+  
+Cart-Data:
+  - Key: OPENSHIFT_LIGHTTPD_LOG_DIR
+    Type: environment
+    Description: "Directory to store application log files."
+  - Key: OPENSHIFT_TMP_DIR
+    Type: environment
+    Description: "Directory to store application temporary files."
+  - Key: OPENSHIFT_REPO_DIR
+    Type: environment
+    Description: "Application root directory where application files reside. This directory is reset every time you do a git-push"
+  - Key: OPENSHIFT_LIGHTTPD_PORT
+    Type: environment
+    Description: "Internal port to which the web-framework binds to."
+  - Key: OPENSHIFT_LIGHTTPD_IP
+    Type: environment
+    Description: "Internal IP to which the web-framework binds to."
+  - Key: OPENSHIFT_APP_DNS
+    Type: environment
+    Description: "Fully qualified domain name for the application."
+  - Key: OPENSHIFT_APP_NAME
+    Type: environment
+    Description: "Application name"
+  - Key: OPENSHIFT_DATA_DIR
+    Type: environment
+    Description: "Directory to store application data files. Preserved across git-pushes. Not shared across gears."
+  - Key: OPENSHIFT_APP_UUID
+    Type: environment
+    Description: "Unique ID which identified the application. Does not change between gears."
+  - Key: OPENSHIFT_GEAR_UUID
+    Type: environment
+    Description: "Unique ID which identified the gear. This value changes between gears."
+Website: http://lighttpd.net
 Endpoints:
-  - Private-IP-Name:		IP_1
-    Private-Port-Name:	PORT_1
-    Private-Port:			8080
-    Public-Port-Name:		PROXY_PORT_1
-#	  Mappings:
-#		- Frontend:		"/pubpath1"
-#		  Backend:		"/intpath1"
-#		- Frontend:		"/pubsocket1"
-#		  Backend:		"/intsocket1"
-#		  Options:		{ "websocket": true }
-  - Private-IP-Name:		IP_2
-    Private-Port-Name:	PORT_2
-    Pivate-Port:			9000
-    Public-Port-Name:		PROXY_PORT_2
-#	  Mappings:
-#	  - Frontend:		"/pubpath2"
-#	  - Backend:		"/intpath2"
+  - Private-IP-Name:   IP_1
+    Private-Port-Name: PORT_1
+    Private-Port:      8080
+    Public-Port-Name:  PROXY_PORT_1
+    Mappings:
+    - Frontend:  ""
+      Backend: ""
+      Options: { websocket: true }
+    - Frontend:  "/health"
+      Backend:  ""
+      Options:  { health: true }
+#  - Private-IP-Name:   IP_2
+#    Private-Port-Name: PORT_2
+#    Pivate-Port:       9000
+#    Public-Port-Name:  PROXY_PORT_2
+#  Mappings:
+#  - Frontend:  "/pubpath2"
+#  - Backend:  "/intpath2"
