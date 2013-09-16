@@ -19,8 +19,8 @@ Provides:
   - lighttpd-1.4
   - "lighttpd"
 Scaling:
-  - Min: 1
-  - Max: 9999
+  Min: 1
+  Max: -1
   
 Cart-Data:
   - Key: OPENSHIFT_LIGHTTPD_LOG_DIR
