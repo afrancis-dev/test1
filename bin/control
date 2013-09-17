@@ -27,10 +27,10 @@ function start() {
     logf="$OPENSHIFT_LIGHTTPD_LOG_DIR/lighttpd.log"
     pushd "$OPENSHIFT_LIGHTTPD_DIR" > /dev/null
     {
-        if [ -f "versions/$LIGHTTPD_VERSION/bin/lighttpd" ]; then
-            echo "`date +"$FMT"`: Starting application '$OPENSHIFT_APP_NAME' from versions/$LIGHTTPD_VERSION/bin/lighttpd..."
+        if [ -f "versions/$LIGHTTPD_VERSION/lighttpd" ]; then
+            echo "`date +"$FMT"`: Starting application '$OPENSHIFT_APP_NAME' from versions/$LIGHTTPD_VERSION/lighttpd..."
 
-            nohup "versions/$LIGHTTPD_VERSION/bin/lighttpd" -f "$OPENSHIFT_LIGHTTPD_DIR/conf/lighttpd.conf" >> $logf 2>&1 &
+            nohup "versions/$LIGHTTPD_VERSION/lighttpd" -f "$OPENSHIFT_LIGHTTPD_DIR/conf/lighttpd.conf" >> $logf 2>&1 &
 
             ret=$?
             npid=$!
