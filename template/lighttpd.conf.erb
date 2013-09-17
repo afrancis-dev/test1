@@ -1,5 +1,5 @@
-server.bind = <%= ENV['OPENSHIFT_LIGHTTPD_IP'] %>
-server.port = <%= ENV['OPENSHIFT_LIGHTTPD_PORT'] %>
+server.bind = "<%= ENV['OPENSHIFT_LIGHTTPD_IP'] %>"
+server.port = "<%= ENV['OPENSHIFT_LIGHTTPD_PORT'] %>"
 
 server.document-root = "<%= ENV['OPENSHIFT_REPO_DIR'] %>public/" 
 

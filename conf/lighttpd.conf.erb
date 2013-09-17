@@ -1,12 +1,12 @@
 server.modules = (
 	"mod_access",
 	"mod_compress",
-	"mod_status"
+	"mod_status",
 	"mod_accesslog" )
 
-server.errorlog = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>error.log
-accesslog.filename = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>access.log
-server.pid-file  = <%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>pid/lighttpd.pid
+server.errorlog = "<%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>error.log"
+accesslog.filename = "<%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>access.log"
+server.pid-file  = "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>pid/lighttpd.pid"
 
 accesslog.format = "%h %V %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{X-Forwarded-For}\""
 
@@ -25,6 +25,6 @@ compress.cache-dir = "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>tmp/"
 compress.filetype = ("text/plain", "text/html")
 
 
-include = "mime.types"
+include "mime.types"
  
-include = "<%= ENV['OPENSHIFT_REPO_DIR'] %>lighttpd.conf"
+include "<%= ENV['OPENSHIFT_REPO_DIR'] %>lighttpd.conf"
