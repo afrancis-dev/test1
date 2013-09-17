@@ -108,7 +108,7 @@ fi
 
 # Source utility functions.
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
-exit 0;
+
 # Handle commands.
 case "$1" in
     start)               start       ;;
