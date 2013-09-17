@@ -8,7 +8,7 @@ server.errorlog = "<%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>error.log"
 accesslog.filename = "<%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>access.log"
 server.pid-file  = "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>pid/lighttpd.pid"
 
-accesslog.format = "%h %V %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{X-Forwarded-For}\""
+accesslog.format = "%h %V %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{X-Forwarded-For}i\""
 
 server.max-worker = 1
 server.max-connections = 1024
