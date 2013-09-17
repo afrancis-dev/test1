@@ -1,9 +1,9 @@
-erb include = "lighttpd.options.conf"
+include = "lighttpd.options.conf"
 
-server.errorlog = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>error.log
-accesslog.filename = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>access.log
-server.pid-file  = <%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>pid/lighttpd.pid
+erb server.errorlog = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>error.log
+erb accesslog.filename = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>access.log
+erb server.pid-file  = <%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>pid/lighttpd.pid
 
-compress.cache-dir = "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>tmp/"
+erb compress.cache-dir = "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>tmp/"
  
 include = "<%= ENV['OPENSHIFT_REPO_DIR'] %>lighttpd.conf"
