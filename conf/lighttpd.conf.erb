@@ -1,4 +1,4 @@
-include = "lighttpd.options.conf"
+erb include = "lighttpd.options.conf"
 
 server.errorlog = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>error.log
 accesslog.filename = <%= ENV['OPENSHIFT_LIGHTTPD_LOG_DIR'] %>access.log
