@@ -1,5 +1,5 @@
 #!/bin/bash
-
+exit 0;
 STOPTIMEOUT=10
 FMT="%a %b %d %Y %H:%M:%S GMT%z (%Z)"
 
