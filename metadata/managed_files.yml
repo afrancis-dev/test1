@@ -3,4 +3,4 @@ locked_files:
   - env/*
   - versions/
  processed_templates:
-   - conf/lighttpd.conf.erb
+   - template/lighttpd.conf.erb
