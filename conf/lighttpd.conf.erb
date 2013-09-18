@@ -5,6 +5,7 @@ server.modules = (
 	"mod_expire",
 	"mod_redirect",
 	"mod_rewrite",
+	"mod_fastcgi",
 	"mod_compress",
 	"mod_status",
 	"mod_accesslog" )
@@ -18,6 +19,20 @@ accesslog.format = "%h %V %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" 
 server.max-worker = 1
 server.max-connections = 512
 server.max-keep-alive-idle = 65
+
+#fastcgi.server = ( ".php" => ((
+#					"bin-path" => "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>versions/<%= ENV['LIGHTTPD_VERSION'] %>/<%= ENV['LIGHTTPD_ARCH'] %>/php/php-cgi",
+#					"socket" => "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>tmp/php.socket",
+#					"bin-environment" => (
+#						"PHPRC" => "<%= ENV['OPENSHIFT_REPO_DIR'] %>php.ini",
+#						"PHP_FCGI_CHILDREN" => "16",
+#						"PHP_FCGI_MAX_REQUESTS" => "10000"
+#					),
+#					"bin-copy-environment" => (
+#						"PATH", "SHELL", "USER"
+#					),
+#					"broken-scriptfilename" => "enable"
+#				)))
 
 url.access-deny = ( "~", ".inc" )
 
