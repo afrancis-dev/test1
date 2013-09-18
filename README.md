@@ -1,4 +1,4 @@
 test1
 =====
 
-test-jaun
+Experimental lighttpd cartridge for OpenShift
