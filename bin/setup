@@ -12,7 +12,6 @@ parse_args $@
 set -u
 
 echo "$version" > $OPENSHIFT_LIGHTTPD_DIR/env/LIGHTTPD_VERSION
-uname -m > $OPENSHIFT_LIGHTTPD_DIR/env/LIGHTTPD_ARCH
 
 pushd $OPENSHIFT_LIGHTTPD_DIR > /dev/null
 for dir in logs tmp pid conf; do

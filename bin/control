@@ -27,10 +27,10 @@ function start() {
     logf="$OPENSHIFT_LIGHTTPD_LOG_DIR/lighttpd.log"
     pushd "$OPENSHIFT_LIGHTTPD_DIR" > /dev/null
     {
-        if [ -f "versions/$LIGHTTPD_VERSION/$LIGHTTPD_ARCH/lighttpd" ]; then
+        if [ -f "versions/$LIGHTTPD_VERSION/lighttpd" ]; then
             echo "`date +"$FMT"`: Starting application '$OPENSHIFT_APP_NAME' from versions/$LIGHTTPD_VERSION/lighttpd..."
 
-            nohup "versions/$LIGHTTPD_VERSION/$LIGHTTPD_ARCH/lighttpd" -f "$OPENSHIFT_LIGHTTPD_DIR/conf/lighttpd.conf" -m "versions/$LIGHTTPD_VERSION/$LIGHTTPD_ARCH/libs/" >> $logf 2>&1 &
+            nohup "versions/$LIGHTTPD_VERSION/lighttpd" -f "$OPENSHIFT_LIGHTTPD_DIR/conf/lighttpd.conf" -m "versions/$LIGHTTPD_VERSION/libs/" >> $logf 2>&1 &
 
             ret=$?
             npid=$!
@@ -41,7 +41,7 @@ function start() {
                 exit $ret
             fi
         else
-            echo "WARN: Could not find the compiled application versions/$LIGHTTPD_VERSION/$LIGHTTPD_ARCH/lighttpd, will not start"
+            echo "WARN: Could not find the compiled application versions/$LIGHTTPD_VERSION/lighttpd, will not start"
         fi
     } >> $logf
 }
