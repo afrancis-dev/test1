@@ -4,12 +4,12 @@ Cartridge-Version: "0.0.1"
 Compatible-Versions: ['0.0.1']
 Cartridge-Vendor: afrancis
 Source-Url: "git://github.com/afrancis-dev/test1.git"
-Display-Name: lighttpd-template
-Description: "lighttpd"
+Display-Name: lighttpd
+Description: "A lightweight, fast HTTP server"
 Version: "1.4.32"
 Versions: ['1.4.32']
 License: "BSD"
-License-Url: "http://tba.com"
+License-Url: "http://lighttpd.net/assets/COPYING"
 Vendor: "lighttpd"
 Categories:
   - service
