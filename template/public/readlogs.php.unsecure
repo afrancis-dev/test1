@@ -1,0 +1,44 @@
+<?php
+
+if(isset($_GET['src'])){
+	header('Content-Type: text/plain');
+	readfile($_SERVER["SCRIPT_FILENAME"]);
+	exit(0);
+}
+
+?>
+<html>
+<head>
+<title>logs</title>
+</head>
+<body>
+<pre>
+<?php
+
+if(isset($_GET['log']) && $_GET['log'] != ''){
+
+	$file = $_GET['log'];
+	$file = str_replace('/', '', $file);
+	$return = shell_exec('tac '.$_SERVER['OPENSHIFT_LIGHTTPD_DIR'].'logs/'.$file.'.log');
+	echo($return);
+	if(!$return){
+		echo('Error.');
+	}
+
+} elseif(isset($_GET['conf'])) {
+	
+	$arch = substr(`uname -m`, 0, -1);
+	echo(shell_exec($_SERVER['OPENSHIFT_LIGHTTPD_DIR'].'versions/lighttpd -f '.$_SERVER['OPENSHIFT_LIGHTTPD_DIR'].'conf/lighttpd.conf -p '));
+	
+} else {
+
+	echo(shell_exec('tac '.$_SERVER['OPENSHIFT_LIGHTTPD_DIR'].'logs/lighttpd.log'));
+	
+}
+
+
+
+?>
+</pre>
+</body>
+</html>
