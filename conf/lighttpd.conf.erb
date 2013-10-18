@@ -16,6 +16,11 @@ server.pid-file  = "<%= ENV['OPENSHIFT_LIGHTTPD_DIR'] %>pid/lighttpd.pid"
 
 accesslog.format = "%h %V %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-Agent}i\" \"%{X-Forwarded-For}i\""
 
+server.bind = "<%= ENV['OPENSHIFT_LIGHTTPD_IP'] %>"
+server.port = "<%= ENV['OPENSHIFT_LIGHTTPD_PORT'] %>"
+
+server.document-root = "<%= ENV['OPENSHIFT_REPO_DIR'] %>public/" 
+
 server.max-worker = 1
 server.max-connections = 512
 server.max-keep-alive-idle = 65

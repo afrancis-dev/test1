@@ -1,8 +1,3 @@
-server.bind = "<%= ENV['OPENSHIFT_LIGHTTPD_IP'] %>"
-server.port = "<%= ENV['OPENSHIFT_LIGHTTPD_PORT'] %>"
-
-server.document-root = "<%= ENV['OPENSHIFT_REPO_DIR'] %>public/" 
-
 status.status-url = "/server-stat"
 status.statistics-url = "/server-stats"
 status.config-url = "/server-conf"
